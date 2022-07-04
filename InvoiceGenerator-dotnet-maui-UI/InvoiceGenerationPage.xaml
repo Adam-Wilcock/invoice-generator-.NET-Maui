@@ -410,7 +410,9 @@
                                     <Entry
                                         Placeholder="Enter here..."
                                         PlaceholderColor="White"
+                                        TextColor="White"
                                         FontSize="16"
+                                        Keyboard="Numeric"
                                         HorizontalOptions="Start"
                                         VerticalOptions="Center"
                                         x:Name="txt_VATSalesTax"/>

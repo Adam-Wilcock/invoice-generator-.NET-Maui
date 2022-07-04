@@ -12,12 +12,12 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private void pcker_clientName_SelectedIndexChanged(object sender, EventArgs e)
     {
-		pcker_clientName.TextColor = Color.FromRgb(255, 255, 255);
+        pcker_clientName.TextColor = Color.FromRgb(255, 255, 255);
 
         var selectedClientViewModel = (ClientNameViewModel)pcker_clientName.SelectedItem;
 
 		var clientName = selectedClientViewModel.ClientName;
-		var todayAsString = DateTime.Today.ToString("dd-mm-yyyy");
+		var todayAsString = DateTime.Today.ToString("dd-MM-yyyy");
 		txt_invoiceReference.Text = $"RJJ-{clientName}-{todayAsString}"; // Create invoice reference
     }
 
