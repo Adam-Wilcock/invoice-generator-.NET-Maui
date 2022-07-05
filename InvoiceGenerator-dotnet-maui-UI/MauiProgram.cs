@@ -1,7 +1,4 @@
-﻿using InvoiceGenerator.Maui.BusinessLogic;
-using InvoiceGenerator.Maui.Domain;
-using InvoiceGenerator_dotnet_maui_UI.ViewModels;
-using Microsoft.EntityFrameworkCore;
+﻿using InvoiceGenerator_dotnet_maui_UI.ViewModels;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
@@ -35,11 +32,7 @@ public static class MauiProgram
 			.AddTransient<InvoiceGenerationViewModel>()
 			.AddTransient<ClientDetailsPage>()
 			.AddSingleton<ClientDetailsViewPage>()
-			.AddTransient<ClientDetailsViewModel>()
-			.AddTransient<IClientService, ClientService>()
-			.AddTransient(typeof(IRepository<>), typeof(Repository<>))
-			.AddDbContext<InvoiceDbContext>(options
-				=> options.UseSqlServer(config.GetConnectionString("invoiceConnectionString")));
+			.AddTransient<ClientDetailsViewModel>();
 
         return builder.Build();
 	}

@@ -1,12 +1,14 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using InvoiceGenerator.Maui.BusinessLogic;
 using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 
 namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
 {
     public partial class InvoiceGenerationViewModel : BaseViewModel
     {
+        private readonly string _apiBaseUrl = "https://new-invoice-gen-webapi.azurewebsites.net";
+
         [ObservableProperty]
         private bool _areClientNamesLoading;
 
@@ -20,11 +22,9 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
 
         public ObservableCollection<LineItemDisplayModel> LineItems { get; } = new ObservableCollection<LineItemDisplayModel>();
 
-        private readonly IClientService _clientService;
-        public InvoiceGenerationViewModel(IClientService clientService)
+        public InvoiceGenerationViewModel()
         {
-            _clientService = clientService;
-            GetClientNames();
+            //GetClientNames().GetAwaiter().GetResult();
         }
 
         public double CalculateTotalValue()
@@ -42,11 +42,11 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
         }
 
         [RelayCommand]
-        public void GetClientNames()
+        public async Task GetClientNames()
         {
             _areClientNamesLoading = true;
 
-            var allClientNames = _clientService.GetClientNames();
+            var allClientNames = await GetClientNamesFromApi();
 
             if (ClientNames.Count != 0)
             {
@@ -55,15 +55,27 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
 
             foreach (var clientName in allClientNames)
             {
-                var newVm = new ClientNameViewModel
-                {
-                    ClientName = clientName.ClientName,
-                    Id = clientName.ClientId
-                };
-                ClientNames.Add(newVm);
+                ClientNames.Add(clientName);
             }
 
             _areClientNamesLoading = false;
+        }
+
+        private async Task<List<ClientNameViewModel>> GetClientNamesFromApi()
+        {
+            return await GetMethod<List<ClientNameViewModel>>("/api/client");
+        }
+
+        private async Task<T> GetMethod<T>(string apiAddress)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_apiBaseUrl);
+                var clientsResponse = await client.GetAsync(apiAddress);
+
+                clientsResponse.EnsureSuccessStatusCode();
+                return await clientsResponse.Content.ReadFromJsonAsync<T>();
+            }
         }
 
         [RelayCommand]

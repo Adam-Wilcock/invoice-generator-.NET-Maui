@@ -1,25 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using InvoiceGenerator.Maui.BusinessLogic;
 using System.Collections.ObjectModel;
+using System.Net.Http.Json;
 
 namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
 {
     public partial class ClientDetailsViewModel : BaseViewModel
     {
-        public ObservableCollection<ClientViewModel> Clients { get; } = new();
+        private readonly string _apiBaseUrl = "https://new-invoice-gen-webapi.azurewebsites.net";
 
-        private readonly IClientService _clientService;
-        public ClientDetailsViewModel(IClientService clientService)
-        {
-            _clientService = clientService;
-        }
+        public ObservableCollection<ClientViewModel> Clients { get; } = new();
 
         [ObservableProperty]
         bool isRefreshing;
 
         [RelayCommand]
-        public void GetClients()
+        public async Task GetClients()
         {
             if (IsBusy)
                 return;
@@ -28,20 +24,13 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             {
                 IsBusy = true;
 
-                var allClients = _clientService.GetClients();
+                var allClients = await GetClientsFromApi();
                 if (Clients.Count != 0)
                     Clients.Clear();
 
-                foreach (var client in allClients)
+                foreach (var c in allClients)
                 {
-                    var newVm = new ClientViewModel
-                    {
-                        ClientName = client.ClientName,
-                        ClientAddress = client.ClientAddress,
-                        ContactEmail = client.ContactEmail,
-                        ContactName = client.ContactName
-                    };
-                    Clients.Add(newVm);
+                    Clients.Add(c);
                 }
             }
             catch (Exception e)
@@ -53,14 +42,30 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
                 IsRefreshing = false;
                 IsBusy = false;
             }
+        }
 
+        private async Task<List<ClientViewModel>> GetClientsFromApi()
+        {
+            return await GetMethod<List<ClientViewModel>>("/api/client");
+        }
 
+        private async Task<T> GetMethod<T>(string apiAddress)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_apiBaseUrl);
+                var clientsResponse = await client.GetAsync(apiAddress);
+
+                clientsResponse.EnsureSuccessStatusCode();
+                return await clientsResponse.Content.ReadFromJsonAsync<T>();
+            }
         }
 
     }
 
     public class ClientViewModel
     {
+        public Guid ClientId { get; set; }
         public string ClientName { get; set; }
         public string ClientAddress { get; set; }
         public string ContactName { get; set; }
