@@ -79,10 +79,6 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             };
             LineItems.Add(newLineItem);
 
-            _lineItemVm.Description = string.Empty;
-            _lineItemVm.Cost = default;
-            _lineItemVm.Quantity = default;
-
             IsBusy = false;
         }
     }

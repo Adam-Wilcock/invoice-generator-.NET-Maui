@@ -203,6 +203,7 @@
                                     HeightRequest="60"
                                     WidthRequest="150"
                                     Command="{Binding AddLineItemsCommand}"
+                                    Clicked="btn_addLineItem_Clicked"
                                     BackgroundColor="MediumSlateBlue"
                                     x:Name="btn_addLineItem"/>
                             </StackLayout>

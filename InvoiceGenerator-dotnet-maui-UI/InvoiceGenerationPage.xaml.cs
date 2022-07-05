@@ -76,4 +76,11 @@ public partial class InvoiceGenerationPage : ContentPage
     {
         ((InvoiceGenerationViewModel)this.BindingContext)._vat = txt_VATSalesTax.Text;
     }
+
+    private void btn_addLineItem_Clicked(object sender, EventArgs e)
+    {
+        txt_lineItemDescription.Text = string.Empty;
+        txt_lineItemCost.Text = string.Empty;
+        txt_lineItemQuantity.Text = string.Empty;
+    }
 }
