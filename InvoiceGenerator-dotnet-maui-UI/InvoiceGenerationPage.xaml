@@ -203,6 +203,7 @@
                                     HeightRequest="60"
                                     WidthRequest="150"
                                     Command="{Binding AddLineItemsCommand}"
+                                    Clicked="btn_addLineItem_Clicked"
                                     BackgroundColor="MediumSlateBlue"
                                     x:Name="btn_addLineItem"/>
                             </StackLayout>
@@ -410,9 +411,12 @@
                                     <Entry
                                         Placeholder="Enter here..."
                                         PlaceholderColor="White"
+                                        TextColor="White"
                                         FontSize="16"
+                                        Keyboard="Numeric"
                                         HorizontalOptions="Start"
                                         VerticalOptions="Center"
+                                        TextChanged="txt_VATSalesTax_TextChanged"
                                         x:Name="txt_VATSalesTax"/>
                                 </StackLayout>
                             </HorizontalStackLayout>
@@ -429,6 +433,7 @@
                                         Margin="0,10,0,0"
                                         HeightRequest="60"
                                         WidthRequest="110"
+                                        Clicked="btn_Generate_Clicked"
                                         BackgroundColor="MediumSlateBlue"
                                         x:Name="btn_Generate"/>
                                 </StackLayout>
