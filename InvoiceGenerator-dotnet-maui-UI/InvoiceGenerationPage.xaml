@@ -51,6 +51,14 @@
                                 VerticalOptions="Center"
                                 x:Name="lbl_addLineItems"/>
                         </StackLayout>
+                        <VerticalStackLayout>
+                            <StackLayout>
+                                <Button
+                                    Text="Refresh Client List"
+                                    Command="{Binding GetClientNamesCommand}"
+                                    x:Name="btn_refreshClientList"/>
+                            </StackLayout>
+                        </VerticalStackLayout>
                         <HorizontalStackLayout
                             Spacing="10"
                             Padding="15,0">
