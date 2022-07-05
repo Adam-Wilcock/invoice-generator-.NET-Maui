@@ -13,6 +13,9 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
         [ObservableProperty]
         public LineItemDisplayModel _lineItemVm = new();
 
+        [ObservableProperty]
+        public string _vat;
+
         public ObservableCollection<ClientNameViewModel> ClientNames { get; } = new ObservableCollection<ClientNameViewModel>();
 
         public ObservableCollection<LineItemDisplayModel> LineItems { get; } = new ObservableCollection<LineItemDisplayModel>();
@@ -22,6 +25,20 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
         {
             _clientService = clientService;
             GetClientNames();
+        }
+
+        public double CalculateTotalValue()
+        {
+            return LineItems.Sum(x => x.Total);
+        }
+
+        public double CalculateInvoiceTotal()
+        {
+            var totalValue = CalculateTotalValue();
+
+            double invoiceTotal = totalValue + (totalValue * double.Parse(_vat) / 100);
+
+            return invoiceTotal;
         }
 
         [RelayCommand]
@@ -61,6 +78,10 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
                 Quantity = _lineItemVm.Quantity
             };
             LineItems.Add(newLineItem);
+
+            _lineItemVm.Description = string.Empty;
+            _lineItemVm.Cost = default;
+            _lineItemVm.Quantity = default;
 
             IsBusy = false;
         }
