@@ -45,32 +45,6 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private async void btn_Generate_Clicked(object sender, EventArgs e)
     {
-        //var invoiceStringBuilder = new StringBuilder();
-
-        //var viewModel = ((InvoiceGenerationViewModel)this.BindingContext);
-
-        //foreach(var ItemIn in viewModel.LineItems)
-        //{
-        //    invoiceStringBuilder
-        //        .Append("Line Item Description: ")
-        //        .AppendLine(ItemIn.Description)
-        //        .Append("Line Item Cost: ")
-        //        .AppendLine(ItemIn.Cost.ToString())
-        //        .Append("Line Item Quantity: ")
-        //        .AppendLine(ItemIn.Quantity.ToString())
-        //        .Append("Line Item Total: ")
-        //        .AppendLine(ItemIn.Total.ToString());
-
-        //    await DisplayAlert("Line Item Details:", invoiceStringBuilder.ToString(), "OK");
-        //    invoiceStringBuilder.Clear();
-        //}
-
-        //invoiceStringBuilder
-        //    .Append(viewModel.CalculateTotalValue())
-        //    .Append(viewModel.CalculateInvoiceTotal());
-
-        //await DisplayAlert("VAT Test:", invoiceStringBuilder.ToString(), "OK");
-
         string caption;
 
         caption = "Line Item Details:";
