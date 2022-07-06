@@ -31,7 +31,7 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
         {
             var totalValue = CalculateTotalValue();
 
-            double invoiceTotal = totalValue + (totalValue * double.Parse(_vat) / 100);
+            double invoiceTotal = Math.Round(totalValue + (totalValue * double.Parse(_vat) / 100), 2);
 
             return invoiceTotal;
         }
@@ -100,7 +100,7 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
     {
         public string Description { get; set; }
         public double Cost { get; set; }
-        public int Quantity { get; set; }
-        public double Total => Cost * Quantity;
+        public double Quantity { get; set; }
+        public double Total => Math.Round(Cost * Quantity, 2);
     }
 }

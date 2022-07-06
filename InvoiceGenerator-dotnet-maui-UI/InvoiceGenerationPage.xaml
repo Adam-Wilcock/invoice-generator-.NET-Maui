@@ -255,7 +255,7 @@
                                     Grid.Column="0"
                                     x:Name="lbl_lineItemDescriptionHeader"/>
                                 <Label
-                                    Text="Cost:"
+                                    Text="Cost (£):"
                                     TextColor="White"
                                     FontSize="10"
                                     HorizontalOptions="Center"
@@ -271,7 +271,7 @@
                                     Grid.Column="2"
                                     x:Name="lbl_lineItemQuantityHeader"/>
                                 <Label
-                                    Text="Total:"
+                                    Text="Total (£):"
                                     TextColor="White"
                                     FontSize="10"
                                     HorizontalOptions="Center"

@@ -39,7 +39,7 @@ public partial class InvoiceGenerationPage : ContentPage
     {
         if (!string.IsNullOrEmpty(txt_lineItemQuantity.Text))
         {
-            ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Quantity = Convert.ToInt32(txt_lineItemQuantity.Text);
+            ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Quantity = Convert.ToDouble(txt_lineItemQuantity.Text);
         }
     }
 
@@ -100,7 +100,7 @@ public partial class InvoiceGenerationPage : ContentPage
 
         if (answer == true) // Yes selected
         {
-
+            txt_VATSalesTax.Text = string.Empty;
         }
         else // No selected
         {
