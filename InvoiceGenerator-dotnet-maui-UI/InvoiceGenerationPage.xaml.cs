@@ -45,31 +45,93 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private async void btn_Generate_Clicked(object sender, EventArgs e)
     {
+        //var invoiceStringBuilder = new StringBuilder();
+
+        //var viewModel = ((InvoiceGenerationViewModel)this.BindingContext);
+
+        //foreach(var ItemIn in viewModel.LineItems)
+        //{
+        //    invoiceStringBuilder
+        //        .Append("Line Item Description: ")
+        //        .AppendLine(ItemIn.Description)
+        //        .Append("Line Item Cost: ")
+        //        .AppendLine(ItemIn.Cost.ToString())
+        //        .Append("Line Item Quantity: ")
+        //        .AppendLine(ItemIn.Quantity.ToString())
+        //        .Append("Line Item Total: ")
+        //        .AppendLine(ItemIn.Total.ToString());
+
+        //    await DisplayAlert("Line Item Details:", invoiceStringBuilder.ToString(), "OK");
+        //    invoiceStringBuilder.Clear();
+        //}
+
+        //invoiceStringBuilder
+        //    .Append(viewModel.CalculateTotalValue())
+        //    .Append(viewModel.CalculateInvoiceTotal());
+
+        //await DisplayAlert("VAT Test:", invoiceStringBuilder.ToString(), "OK");
+
+        string caption;
+
+        caption = "Line Item Details:";
+
         var invoiceStringBuilder = new StringBuilder();
 
         var viewModel = ((InvoiceGenerationViewModel)this.BindingContext);
 
-        foreach(var ItemIn in viewModel.LineItems)
+        foreach(var Item in viewModel.LineItems)
         {
             invoiceStringBuilder
-                .Append("Line Item Description: ")
-                .AppendLine(ItemIn.Description)
-                .Append("Line Item Cost: ")
-                .AppendLine(ItemIn.Cost.ToString())
-                .Append("Line Item Quantity: ")
-                .AppendLine(ItemIn.Quantity.ToString())
-                .Append("Line Item Total: ")
-                .AppendLine(ItemIn.Total.ToString());
+                .Append("Line Item Description:  ")
+                .AppendLine(Item.Description)
+                .Append("Line Item Cost:  ")
+                .AppendLine("£" + Item.Cost.ToString())
+                .Append("Line Item Quantity:  ")
+                .AppendLine(Item.Quantity.ToString())
+                .Append("Line Item Total:  ")
+                .AppendLine("£" + Item.Total.ToString());
 
-            await DisplayAlert("Line Item Details:", invoiceStringBuilder.ToString(), "OK");
+            await DisplayAlert(caption, invoiceStringBuilder.ToString(), "OK");
             invoiceStringBuilder.Clear();
         }
 
-        invoiceStringBuilder
-            .Append(viewModel.CalculateTotalValue())
-            .Append(viewModel.CalculateInvoiceTotal());
+        caption = "Invoice:";
 
-        await DisplayAlert("VAT Test:", invoiceStringBuilder.ToString(), "OK");
+        string invoiceReference = txt_invoiceReference.Text;
+        string VAT = txt_VATSalesTax.Text;
+        string issueDate = DateTime.Today.ToString("dd-MM-yyyy");
+        string dueDate = DateTime.Today.AddMonths(1).ToString("dd-MM-yyyy");
+
+        invoiceStringBuilder
+            .Append("Invoice Reference:  ")
+            .AppendLine(invoiceReference)
+            .Append("Total Value:  ")
+            .AppendLine("£" + viewModel.CalculateTotalValue().ToString())
+            .Append("VAT Rate:  ")
+            .AppendLine(VAT + "%")
+            .Append("Issue Date:  ")
+            .AppendLine(issueDate)
+            .Append("Due Date:  ")
+            .AppendLine(dueDate)
+            .Append("Invoice Total:  ")
+            .AppendLine("£" + viewModel.CalculateInvoiceTotal().ToString());
+
+        await DisplayAlert(caption, invoiceStringBuilder.ToString(), "OK");
+        invoiceStringBuilder.Clear();
+
+        string message = "Do you wish to create another invoice?";
+        caption = "Create Another Invoice?";
+
+        bool answer = await DisplayAlert(caption, message, "Yes", "No");
+
+        if (answer == true) // Yes selected
+        {
+
+        }
+        else // No selected
+        {
+
+        }
     }
 
     private void txt_VATSalesTax_TextChanged(object sender, TextChangedEventArgs e)

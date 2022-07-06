@@ -22,11 +22,6 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
 
         public ObservableCollection<LineItemDisplayModel> LineItems { get; } = new ObservableCollection<LineItemDisplayModel>();
 
-        public InvoiceGenerationViewModel()
-        {
-            //GetClientNames().GetAwaiter().GetResult();
-        }
-
         public double CalculateTotalValue()
         {
             return LineItems.Sum(x => x.Total);
