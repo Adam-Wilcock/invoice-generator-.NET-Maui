@@ -20,6 +20,8 @@ public partial class InvoiceGenerationPage : ContentPage
 		var clientName = selectedClientViewModel.ClientName;
 		var todayAsString = DateTime.Today.ToString("dd-MM-yyyy");
 		txt_invoiceReference.Text = $"RJJ-{clientName}-{todayAsString}"; // Create invoice reference
+
+        btn_addLineItem.IsEnabled = true;
     }
 
     private void txt_lineItemDescription_TextChanged(object sender, TextChangedEventArgs e)
@@ -102,6 +104,8 @@ public partial class InvoiceGenerationPage : ContentPage
         {
             txt_VATSalesTax.Text = string.Empty;
             ((InvoiceGenerationViewModel)this.BindingContext).LineItems.Clear();
+            txt_lineItemDescription.Focus();
+            btn_Generate.IsEnabled = false;
         }
         else // No selected
         {
@@ -119,5 +123,7 @@ public partial class InvoiceGenerationPage : ContentPage
         txt_lineItemDescription.Text = string.Empty;
         txt_lineItemCost.Text = string.Empty;
         txt_lineItemQuantity.Text = string.Empty;
+
+        btn_Generate.IsEnabled = true;
     }
 }

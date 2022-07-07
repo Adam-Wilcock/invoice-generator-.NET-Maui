@@ -210,6 +210,7 @@
                                     VerticalOptions="Center"
                                     HeightRequest="60"
                                     WidthRequest="150"
+                                    IsEnabled="False"
                                     Command="{Binding AddLineItemsCommand}"
                                     Clicked="btn_addLineItem_Clicked"
                                     BackgroundColor="MediumSlateBlue"
@@ -442,6 +443,7 @@
                                         Margin="0,10,0,0"
                                         HeightRequest="60"
                                         WidthRequest="110"
+                                        IsEnabled="False"
                                         Clicked="btn_Generate_Clicked"
                                         BackgroundColor="MediumSlateBlue"
                                         x:Name="btn_Generate"/>
