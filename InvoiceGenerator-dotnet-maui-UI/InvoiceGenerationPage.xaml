@@ -210,6 +210,7 @@
                                     VerticalOptions="Center"
                                     HeightRequest="60"
                                     WidthRequest="150"
+                                    IsEnabled="False"
                                     Command="{Binding AddLineItemsCommand}"
                                     Clicked="btn_addLineItem_Clicked"
                                     BackgroundColor="MediumSlateBlue"
@@ -255,7 +256,7 @@
                                     Grid.Column="0"
                                     x:Name="lbl_lineItemDescriptionHeader"/>
                                 <Label
-                                    Text="Cost:"
+                                    Text="Cost (£):"
                                     TextColor="White"
                                     FontSize="10"
                                     HorizontalOptions="Center"
@@ -271,7 +272,7 @@
                                     Grid.Column="2"
                                     x:Name="lbl_lineItemQuantityHeader"/>
                                 <Label
-                                    Text="Total:"
+                                    Text="Total (£):"
                                     TextColor="White"
                                     FontSize="10"
                                     HorizontalOptions="Center"
@@ -302,7 +303,8 @@
                                     VerticalOptions="FillAndExpand"/>
                             </Grid>
                         </Frame>
-                        <ListView ItemsSource="{Binding LineItems}">
+                        <ListView ItemsSource="{Binding LineItems}"
+                                  x:Name="lstview_lineItems">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
@@ -441,6 +443,7 @@
                                         Margin="0,10,0,0"
                                         HeightRequest="60"
                                         WidthRequest="110"
+                                        IsEnabled="False"
                                         Clicked="btn_Generate_Clicked"
                                         BackgroundColor="MediumSlateBlue"
                                         x:Name="btn_Generate"/>
