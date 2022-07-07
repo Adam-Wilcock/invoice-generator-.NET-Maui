@@ -20,13 +20,11 @@ public partial class InvoiceGenerationPage : ContentPage
 		var clientName = selectedClientViewModel.ClientName;
 		var todayAsString = DateTime.Today.ToString("dd-MM-yyyy");
 		txt_invoiceReference.Text = $"RJJ-{clientName}-{todayAsString}"; // Create invoice reference
-
-        btn_addLineItem.IsEnabled = true;
     }
 
     private void txt_lineItemDescription_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(txt_lineItemDescription.Text) && !string.IsNullOrWhiteSpace(txt_lineItemDescription.Text))
+        if (CheckEmpty(txt_lineItemDescription.Text))
         {
             ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Description = txt_lineItemDescription.Text;
         }
@@ -34,7 +32,7 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private void txt_lineItemCost_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(txt_lineItemCost.Text) && !string.IsNullOrWhiteSpace(txt_lineItemCost.Text))
+        if (CheckEmpty(txt_lineItemCost.Text) && TryParseToDouble(txt_lineItemCost.Text))
         {
             ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Cost = Convert.ToDouble(txt_lineItemCost.Text);
         }
@@ -42,10 +40,43 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private void txt_lineItemQuantity_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(txt_lineItemQuantity.Text) && !string.IsNullOrWhiteSpace(txt_lineItemQuantity.Text))
+        if (CheckEmpty(txt_lineItemQuantity.Text) && TryParseToDouble(txt_lineItemQuantity.Text))
         {
             ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Quantity = Convert.ToDouble(txt_lineItemQuantity.Text);
         }
+    }
+
+    private bool CheckEmpty(string Value)
+    {
+        bool result;
+
+        if (string.IsNullOrEmpty(Value) && string.IsNullOrWhiteSpace(Value))
+        {
+            result = false;
+        }
+        else
+        {
+            result = true;
+        }
+
+        return result;
+    }
+
+    private bool TryParseToDouble(string Value)
+    {
+        double outcome;
+        bool result;
+
+        if (double.TryParse(Value, out outcome))
+        {
+            result = true;
+        }
+        else
+        {
+            result = false;
+        }
+
+        return result;
     }
 
     private async void btn_Generate_Clicked(object sender, EventArgs e)
@@ -118,7 +149,10 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private void txt_VATSalesTax_TextChanged(object sender, TextChangedEventArgs e)
     {
-        ((InvoiceGenerationViewModel)this.BindingContext)._vat = txt_VATSalesTax.Text;
+        if (CheckEmpty(txt_VATSalesTax.Text) && TryParseToDouble(txt_VATSalesTax.Text))
+        {
+            ((InvoiceGenerationViewModel)this.BindingContext)._vat = txt_VATSalesTax.Text;
+        }
     }
 
     private void btn_addLineItem_Clicked(object sender, EventArgs e)
@@ -126,7 +160,5 @@ public partial class InvoiceGenerationPage : ContentPage
         txt_lineItemDescription.Text = string.Empty;
         txt_lineItemCost.Text = string.Empty;
         txt_lineItemQuantity.Text = string.Empty;
-
-        btn_Generate.IsEnabled = true;
     }
 }
