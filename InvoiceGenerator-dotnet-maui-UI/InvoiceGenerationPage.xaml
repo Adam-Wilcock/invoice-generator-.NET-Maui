@@ -302,7 +302,8 @@
                                     VerticalOptions="FillAndExpand"/>
                             </Grid>
                         </Frame>
-                        <ListView ItemsSource="{Binding LineItems}">
+                        <ListView ItemsSource="{Binding LineItems}"
+                                  x:Name="lstview_lineItems">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>

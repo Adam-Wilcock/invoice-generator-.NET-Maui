@@ -101,6 +101,7 @@ public partial class InvoiceGenerationPage : ContentPage
         if (answer == true) // Yes selected
         {
             txt_VATSalesTax.Text = string.Empty;
+            ((InvoiceGenerationViewModel)this.BindingContext).LineItems.Clear();
         }
         else // No selected
         {
