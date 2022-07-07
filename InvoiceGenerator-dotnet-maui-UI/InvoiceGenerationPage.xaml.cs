@@ -26,12 +26,15 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private void txt_lineItemDescription_TextChanged(object sender, TextChangedEventArgs e)
     {
-		((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Description = txt_lineItemDescription.Text;
+        if (!string.IsNullOrEmpty(txt_lineItemDescription.Text) && !string.IsNullOrWhiteSpace(txt_lineItemDescription.Text))
+        {
+            ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Description = txt_lineItemDescription.Text;
+        }
     }
 
     private void txt_lineItemCost_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(txt_lineItemCost.Text))
+        if (!string.IsNullOrEmpty(txt_lineItemCost.Text) && !string.IsNullOrWhiteSpace(txt_lineItemCost.Text))
         {
             ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Cost = Convert.ToDouble(txt_lineItemCost.Text);
         }
@@ -39,7 +42,7 @@ public partial class InvoiceGenerationPage : ContentPage
 
     private void txt_lineItemQuantity_TextChanged(object sender, TextChangedEventArgs e)
     {
-        if (!string.IsNullOrEmpty(txt_lineItemQuantity.Text))
+        if (!string.IsNullOrEmpty(txt_lineItemQuantity.Text) && !string.IsNullOrWhiteSpace(txt_lineItemQuantity.Text))
         {
             ((InvoiceGenerationViewModel)this.BindingContext)._lineItemVm.Quantity = Convert.ToDouble(txt_lineItemQuantity.Text);
         }
