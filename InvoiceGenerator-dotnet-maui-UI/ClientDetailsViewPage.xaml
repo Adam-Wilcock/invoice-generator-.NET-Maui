@@ -185,21 +185,21 @@
 
                                                 <BoxView
                                                     BackgroundColor="DarkSlateBlue"
-                                                    HeightRequest="20"
+                                                    HeightRequest="40"
                                                     WidthRequest="1"
                                                     Grid.Column="0"
                                                     HorizontalOptions="EndAndExpand"
                                                     VerticalOptions="FillAndExpand"/>
                                                 <BoxView
                                                     BackgroundColor="DarkSlateBlue"
-                                                    HeightRequest="20"
+                                                    HeightRequest="40"
                                                     WidthRequest="1"
                                                     Grid.Column="1"
                                                     HorizontalOptions="EndAndExpand"
                                                     VerticalOptions="FillAndExpand"/>
                                                 <BoxView
                                                     BackgroundColor="DarkSlateBlue"
-                                                    HeightRequest="20"
+                                                    HeightRequest="40"
                                                     WidthRequest="1"
                                                     Grid.Column="2"
                                                     HorizontalOptions="EndAndExpand"
