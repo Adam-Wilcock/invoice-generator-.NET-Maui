@@ -4,9 +4,9 @@
              x:Class="InvoiceGenerator_dotnet_maui_UI.ClientDetailsViewPage"
              xmlns:viewmodel="clr-namespace:InvoiceGenerator_dotnet_maui_UI.ViewModels"
              xmlns:model="clr-namespace:InvoiceGenerator_dotnet_maui_UI.ViewModels"
+             x:DataType="viewmodel:ClientDetailsViewModel"
              Title="ClientDetailsViewPage"
-             BackgroundColor="#272537"
-             x:DataType="viewmodel:ClientDetailsViewModel">
+             BackgroundColor="#272537">
 
     <ContentPage.Content>
         <ScrollView>
@@ -213,6 +213,12 @@
                         </RefreshView>
                     </StackLayout>
                 </VerticalStackLayout>
+
+                <ActivityIndicator
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="CenterAndExpand"
+                    IsRunning="{Binding IsBusy}"
+                    IsVisible="{Binding IsBusy}"/>
             </Grid>
         </ScrollView>
     </ContentPage.Content>

@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Net.Http.Json;
 
 namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
@@ -25,6 +26,7 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
                 IsBusy = true;
 
                 var allClients = await GetClientsFromApi();
+
                 if (Clients.Count != 0)
                     Clients.Clear();
 
@@ -35,7 +37,8 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             }
             catch (Exception e)
             {
-
+                Debug.WriteLine($"Unable to get clients: {e.Message}");
+                await Shell.Current.DisplayAlert("Error!", e.Message, "OK"); 
             }
             finally
             {
