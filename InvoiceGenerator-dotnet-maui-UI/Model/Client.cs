@@ -1,7 +1,7 @@
 ﻿
-namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
+namespace InvoiceGenerator_dotnet_maui_UI.Model
 {
-    public class ClientViewModel
+    public class Client
     {
         public Guid ClientId { get; set; }
         public string ClientName { get; set; }
