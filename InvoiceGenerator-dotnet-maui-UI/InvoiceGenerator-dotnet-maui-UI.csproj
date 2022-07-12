@@ -63,19 +63,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="ClientDetailsEntryPage.xaml">
+	  <MauiXaml Update="View\ClientDetailsEntryPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ClientDetailsPage.xaml">
+	  <MauiXaml Update="View\ClientDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="ClientDetailsViewPage.xaml">
+	  <MauiXaml Update="View\ClientDetailsViewPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="InvoiceGenerationPage.xaml">
+	  <MauiXaml Update="View\InvoiceGenerationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="StartPage.xaml">
+	  <MauiXaml Update="View\StartPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

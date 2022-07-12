@@ -89,18 +89,4 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             IsBusy = false;
         }
     }
-
-    public class ClientNameViewModel
-    {
-        public Guid Id { get; set; }
-        public string ClientName { get; set; }
-    }
-
-    public class LineItemDisplayModel
-    {
-        public string Description { get; set; }
-        public double Cost { get; set; }
-        public double Quantity { get; set; }
-        public double Total => Math.Round(Cost * Quantity, 2);
-    }
 }
