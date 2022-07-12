@@ -1,13 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using InvoiceGenerator_dotnet_maui_UI.Services;
 using System.Collections.ObjectModel;
-using System.Net.Http.Json;
 
 namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
 {
     public partial class InvoiceGenerationViewModel : BaseViewModel
     {
-        private readonly string _apiBaseUrl = "https://new-invoice-gen-webapi.azurewebsites.net";
+        private readonly ClientService clientService;
 
         [ObservableProperty]
         private bool _areClientNamesLoading;
@@ -21,6 +21,12 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
         public ObservableCollection<ClientNameViewModel> ClientNames { get; } = new ObservableCollection<ClientNameViewModel>();
 
         public ObservableCollection<LineItemDisplayModel> LineItems { get; } = new ObservableCollection<LineItemDisplayModel>();
+
+        public InvoiceGenerationViewModel(ClientService clientService)
+        {
+            this.clientService = clientService;
+            _ = GetClientNames();
+        }
 
         public double CalculateTotalValue()
         {
@@ -41,7 +47,7 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
         {
             _areClientNamesLoading = true;
 
-            var allClientNames = await GetClientNamesFromApi();
+            var allClientNames = await clientService.GetClientNamesFromApi();
 
             if (ClientNames.Count != 0)
             {
@@ -54,23 +60,6 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             }
 
             _areClientNamesLoading = false;
-        }
-
-        private async Task<List<ClientNameViewModel>> GetClientNamesFromApi()
-        {
-            return await GetMethod<List<ClientNameViewModel>>("/api/client");
-        }
-
-        private async Task<T> GetMethod<T>(string apiAddress)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(_apiBaseUrl);
-                var clientsResponse = await client.GetAsync(apiAddress);
-
-                clientsResponse.EnsureSuccessStatusCode();
-                return await clientsResponse.Content.ReadFromJsonAsync<T>();
-            }
         }
 
         [RelayCommand]
