@@ -1,4 +1,5 @@
-﻿using InvoiceGenerator_dotnet_maui_UI.ViewModels;
+﻿using InvoiceGenerator_dotnet_maui_UI.Services;
+using InvoiceGenerator_dotnet_maui_UI.ViewModels;
 using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
@@ -32,7 +33,8 @@ public static class MauiProgram
 			.AddTransient<InvoiceGenerationViewModel>()
 			.AddTransient<ClientDetailsPage>()
 			.AddSingleton<ClientDetailsViewPage>()
-			.AddTransient<ClientDetailsViewModel>();
+			.AddTransient<ClientDetailsViewModel>()
+			.AddTransient<ClientService>();
 
         return builder.Build();
 	}

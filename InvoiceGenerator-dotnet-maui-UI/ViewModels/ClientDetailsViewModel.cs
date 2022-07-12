@@ -1,19 +1,24 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using InvoiceGenerator_dotnet_maui_UI.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Net.Http.Json;
 
 namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
 {
     public partial class ClientDetailsViewModel : BaseViewModel
     {
-        private readonly string _apiBaseUrl = "https://new-invoice-gen-webapi.azurewebsites.net";
+        private readonly ClientService clientService;
 
         public ObservableCollection<ClientViewModel> Clients { get; } = new();
 
         [ObservableProperty]
         bool isRefreshing;
+
+        public ClientDetailsViewModel(ClientService clientService)
+        {
+            this.clientService = clientService;
+        }
 
         [RelayCommand]
         public async Task GetClients()
@@ -25,7 +30,7 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             {
                 IsBusy = true;
 
-                var allClients = await GetClientsFromApi();
+                var allClients = await clientService.GetClientsFromApi();
 
                 if (Clients.Count != 0)
                     Clients.Clear();
@@ -44,23 +49,6 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             {
                 IsRefreshing = false;
                 IsBusy = false;
-            }
-        }
-
-        private async Task<List<ClientViewModel>> GetClientsFromApi()
-        {
-            return await GetMethod<List<ClientViewModel>>("/api/client");
-        }
-
-        private async Task<T> GetMethod<T>(string apiAddress)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(_apiBaseUrl);
-                var clientsResponse = await client.GetAsync(apiAddress);
-
-                clientsResponse.EnsureSuccessStatusCode();
-                return await clientsResponse.Content.ReadFromJsonAsync<T>();
             }
         }
 
