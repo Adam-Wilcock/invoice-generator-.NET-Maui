@@ -430,7 +430,6 @@
                                         Margin="0,10,0,0"
                                         HeightRequest="60"
                                         WidthRequest="110"
-                                        IsEnabled="False"
                                         Clicked="btn_Generate_Clicked"
                                         BackgroundColor="MediumSlateBlue"
                                         x:Name="btn_Generate"/>
