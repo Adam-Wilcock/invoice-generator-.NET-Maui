@@ -16,25 +16,38 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
         [ObservableProperty]
         bool isRefreshing;
 
+        [ObservableProperty]
+        bool canPage = false;
+
+        [ObservableProperty]
+        string currentPage = string.Empty;
+
         public ClientDetailsViewModel(ClientService clientService)
         {
             this.clientService = clientService;
-            PagedViewModel.PageNumber = 1;
         }
 
         [RelayCommand]
-        public async Task GetClients()
+        public async Task GetClients(string choice)
         {
             if (IsBusy)
+                return;
+
+            if (!AllowPaging(choice))
                 return;
 
             try
             {
                 IsBusy = true;
+                IsRefreshing = true;
 
-                PagedViewModel = await clientService.GetPageFromApi(PagedViewModel.PageNumber);
-
+                int targetPageNumber = GetPageNumber(choice);
+                    
+                PagedViewModel = await clientService.GetPageFromApi(targetPageNumber);
                 UpdateClientsListForViewModel();
+
+                CurrentPage = $"Page {PagedViewModel.PageNumber} of {PagedViewModel.TotalPages}";
+                CanPage = true;
             }
             catch (Exception e)
             {
@@ -48,63 +61,45 @@ namespace InvoiceGenerator_dotnet_maui_UI.ViewModels
             }
         }
 
-        [RelayCommand]
-        public async Task GetNextPage()
+        private bool AllowPaging(string choice)
         {
-            if (IsBusy)
-                return;
-
-            try
+            if (choice.Equals("first", StringComparison.InvariantCultureIgnoreCase))
             {
-                IsBusy = true;
-
-                var targetPageNumber = PagedViewModel.PageNumber >= PagedViewModel.TotalPages
-                    ? PagedViewModel.TotalPages
-                    : PagedViewModel.PageNumber + 1;
-
-                PagedViewModel = await clientService.GetPageFromApi(targetPageNumber);
-
-                UpdateClientsListForViewModel();
+                return true;
             }
-            catch (Exception e)
+            if (choice.Equals("next", StringComparison.InvariantCultureIgnoreCase))
             {
-                Debug.WriteLine($"Unable to get clients: {e.Message}");
-                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
+                return PagedViewModel.PageNumber == PagedViewModel.TotalPages
+                        ? false
+                        : true;
             }
-            finally
+            if (choice.Equals("previous", StringComparison.InvariantCultureIgnoreCase))
             {
-                IsRefreshing = false;
-                IsBusy = false;
+                return PagedViewModel.PageNumber == 1
+                        ? false
+                        : true;
             }
+
+            // Does not match above, return false as it should've at least matched one of the above
+            return false;
         }
 
-        [RelayCommand]
-        public async Task GetPreviousPage()
+        private int GetPageNumber(string choice)
         {
-            if (IsBusy)
-                return;
-
-            try
+            switch (choice.ToLower())
             {
-                IsBusy = true;
-
-                var targetPageNumber = PagedViewModel.PageNumber <= 1
-                    ? 1
-                    : PagedViewModel.PageNumber - 1;
-
-                PagedViewModel = await clientService.GetPageFromApi(targetPageNumber);
-
-                UpdateClientsListForViewModel();
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine($"Unable to get clients: {e.Message}");
-                await Shell.Current.DisplayAlert("Error!", e.Message, "OK");
-            }
-            finally
-            {
-                IsRefreshing = false;
-                IsBusy = false;
+                case "first":
+                    return 1;
+                case "next":
+                    return PagedViewModel.PageNumber >= PagedViewModel.TotalPages
+                            ? PagedViewModel.TotalPages
+                            : PagedViewModel.PageNumber + 1;
+                case "previous":
+                    return PagedViewModel.PageNumber <= 1
+                            ? 1
+                            : PagedViewModel.PageNumber - 1;
+                default:
+                    return 1;
             }
         }
 

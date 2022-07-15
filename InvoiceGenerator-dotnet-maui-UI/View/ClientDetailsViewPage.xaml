@@ -46,8 +46,10 @@
                                 VerticalOptions="Center"
                                 HeightRequest="40"
                                 WidthRequest="110"
-                                Command="{Binding GetPreviousPageCommand}"
+                                Command="{Binding GetClientsCommand}"
+                                CommandParameter="Previous"
                                 IsEnabled="{Binding IsNotBusy}"
+                                IsVisible="{Binding CanPage}"
                                 BackgroundColor="MediumSlateBlue"
                                 x:Name="btn_Previous"/>
                             <Button
@@ -60,6 +62,7 @@
                                 WidthRequest="150"
                                 BackgroundColor="MediumSlateBlue"
                                 Command="{Binding GetClientsCommand}"
+                                CommandParameter="First"
                                 IsEnabled="{Binding IsNotBusy}"
                                 x:Name="btn_View"/>
                             <Button
@@ -70,8 +73,10 @@
                                 VerticalOptions="Center"
                                 HeightRequest="40"
                                 WidthRequest="110"
-                                Command="{Binding GetNextPageCommand}"
+                                Command="{Binding GetClientsCommand}"
+                                CommandParameter="Next"
                                 IsEnabled="{Binding IsNotBusy}"
+                                IsVisible="{Binding CanPage}"
                                 BackgroundColor="MediumSlateBlue"
                                 x:Name="btn_Next"/>
                         </StackLayout>
@@ -89,6 +94,10 @@
                             Margin="0,130,0,0"
                             SemanticProperties.HeadingLevel="Level2"
                             x:Name="lbl_clientDetails"/>
+                        <Label
+                            Text="{Binding CurrentPage}"
+                            TextColor="White"
+                            HorizontalOptions="Center"/>
                     </StackLayout>
                     <StackLayout
                         Padding="00"
@@ -241,6 +250,7 @@
                 <ActivityIndicator
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="CenterAndExpand"
+                    Color="White"
                     IsRunning="{Binding IsBusy}"
                     IsVisible="{Binding IsBusy}"/>
             </Grid>
