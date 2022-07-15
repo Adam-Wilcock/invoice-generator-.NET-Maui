@@ -37,7 +37,19 @@
                     <VerticalStackLayout
                         Spacing="5">
 
-                        <StackLayout Grid.Row="1" Grid.Column="1">
+                        <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="Center">
+                            <Button
+                                Text="&lt;"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                HeightRequest="40"
+                                WidthRequest="110"
+                                Command="{Binding GetPreviousPageCommand}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="MediumSlateBlue"
+                                x:Name="btn_Previous"/>
                             <Button
                                 Text="View"
                                 TextColor="White"
@@ -50,6 +62,18 @@
                                 Command="{Binding GetClientsCommand}"
                                 IsEnabled="{Binding IsNotBusy}"
                                 x:Name="btn_View"/>
+                            <Button
+                                Text="&gt;"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"
+                                HeightRequest="40"
+                                WidthRequest="110"
+                                Command="{Binding GetNextPageCommand}"
+                                IsEnabled="{Binding IsNotBusy}"
+                                BackgroundColor="MediumSlateBlue"
+                                x:Name="btn_Next"/>
                         </StackLayout>
                     </VerticalStackLayout>
                 </VerticalStackLayout>
