@@ -40,5 +40,17 @@ namespace InvoiceGenerator_dotnet_maui_UI.Services
                 return await clientsResponse.Content.ReadFromJsonAsync<T>();
             }
         }
+
+        public async Task<ClientViewModel> AddClientIntoApi(ClientCreationViewModel viewModel)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(_apiBaseUrl);
+                var response = await client.PostAsJsonAsync<ClientCreationViewModel>("/api/client", viewModel);
+
+                response.EnsureSuccessStatusCode();
+                return await response.Content.ReadFromJsonAsync<ClientViewModel>();
+            }
+        }
     }
 }
